@@ -23,6 +23,10 @@ class _MyTermsAndConditionsScreenState
   /// The controller for the text field that this screen displays in bottom sheet.
   final TextEditingController _textController = TextEditingController();
 
+  final _modelManager = OnDeviceTranslatorModelManager();
+  final _sourceLanguage = TranslateLanguage.english;
+  final _targetLanguage = TranslateLanguage.spanish;
+
   /// onDeviceTranslator is the translator that this screen uses to translate text.
   final _onDeviceTranslator = OnDeviceTranslator(
       sourceLanguage: TranslateLanguage.english,
@@ -35,9 +39,9 @@ class _MyTermsAndConditionsScreenState
   @override
   void initState() {
     super.initState();
-
+    performDownload();
     dataHindiIndexNotifier = ValueNotifier(-1);
-    translatedText = ValueNotifier('');
+    translatedText = ValueNotifier('welcome');
     // Add a listener to the scroll controller to detect when the user has scrolled to the end.
     _scrollController.addListener(_onScroll);
   }
@@ -205,5 +209,16 @@ class _MyTermsAndConditionsScreenState
             id: id);
       },
     );
+  }
+
+  void performDownload() async {
+    await _modelManager.downloadModel(
+      _sourceLanguage.bcpCode,
+    );
+    await _modelManager.downloadModel(
+      _targetLanguage.bcpCode,
+    );
+
+    _onDeviceTranslator.translateText('welcome').then((value) {});
   }
 }
