@@ -1,4 +1,3 @@
-Certainly! Here's a simple README file that explains how to run `flutter pub get` and `flutter build apk --release` commands:
 
 ```markdown
 # Flutter App Build Instructions
